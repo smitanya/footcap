@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Корзина — Footcap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #fff;
+      color: #333;
+    }
+    header {
+      background-color: #222;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    .cart-item {
+      border-bottom: 1px solid #ccc;
+      padding: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    .checkout-button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      background-color: #000;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .checkout-button:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ваша корзина</h1>
+  </header>
+  <main>
+    <div class="cart-item">
+      <span>Товар 1</span>
+      <span>₴499</span>
+    </div>
+    <div class="cart-item">
+      <span>Товар 2</span>
+      <span>₴799</span>
+    </div>
+    <button class="checkout-button">Перейти к оформлению</button>
+  </main>
+</body>
+</html>
