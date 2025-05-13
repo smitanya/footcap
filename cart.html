@@ -53,14 +53,20 @@
       font-size: 1.2em;
       cursor: pointer;
     }
+    .cart-summary {
+      margin-top: 20px;
+      font-size: 1.1em;
+      text-align: right;
+    }
     .checkout-button {
-      margin-top: 30px;
+      margin-top: 20px;
       padding: 12px 24px;
       background-color: #000;
       color: white;
       border: none;
       font-size: 1rem;
       cursor: pointer;
+      float: right;
     }
     .checkout-button:hover {
       background-color: #333;
@@ -88,7 +94,10 @@
         }
 
         container.innerHTML = '';
+        let total = 0;
+
         cart.forEach((item, index) => {
+          total += parseFloat(item.price);
           const div = document.createElement('div');
           div.className = 'cart-item';
           div.innerHTML = `
@@ -99,6 +108,11 @@
           `;
           container.appendChild(div);
         });
+
+        const summary = document.createElement('div');
+        summary.className = 'cart-summary';
+        summary.innerHTML = `Итого: ₴${total.toFixed(2)}`;
+        container.appendChild(summary);
 
         const button = document.createElement('button');
         button.className = 'checkout-button';
@@ -111,6 +125,7 @@
             cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
             renderCart();
+            if (window.updateCartBadge) updateCartBadge();
           });
         });
       }
