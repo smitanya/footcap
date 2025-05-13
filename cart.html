@@ -73,13 +73,14 @@
     }
     #order-form {
       display: none;
-      margin-top: 40px;
+      margin-top: 60px;
+      text-align: center;
     }
     #order-form input {
       display: block;
-      margin-bottom: 15px;
+      margin: 10px auto;
       padding: 10px;
-      width: 100%;
+      width: 90%;
       max-width: 400px;
       font-size: 1rem;
     }
@@ -100,7 +101,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: white;
+      background-color: #4caf50;
+      color: white;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -152,7 +154,7 @@
           div.innerHTML = `
             <img src="${item.image}" alt="${item.title}">
             <div class="cart-item-title">${item.title}</div>
-            <div class="cart-item-price">₴${item.price}</div>
+            <div class="cart-item-price">€${item.price}</div>
             <button class="cart-item-remove" data-index="${index}" title="Удалить">×</button>
           `;
           container.appendChild(div);
@@ -160,7 +162,7 @@
 
         const summary = document.createElement('div');
         summary.className = 'cart-summary';
-        summary.innerHTML = `Итого: ₴${total.toFixed(2)}`;
+        summary.innerHTML = `Итого: € ${total.toFixed(2)}`;
         container.appendChild(summary);
 
         const button = document.createElement('button');
@@ -168,6 +170,7 @@
         button.textContent = 'Перейти к оформлению';
         button.addEventListener('click', () => {
           orderForm.style.display = 'block';
+          orderForm.scrollIntoView({ behavior: 'smooth' });
         });
         container.appendChild(button);
 
