@@ -49,7 +49,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     - preload banner
   -->
   <link rel="preload" href="./assets/images/hero-banner.png" as="image">
-
 </head>
 
 <body id="top">
@@ -1590,7 +1589,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         cart.push({ title, price, image });
         localStorage.setItem('cart', JSON.stringify(cart));
-        alert(`Добавлено в корзину: ${title}`);
+        const toast = document.createElement('div');
+toast.textContent = 'Товар добавлен в корзину!';
+toast.style.cssText = `
+  background: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  margin-top: 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  font-size: 14px;
+  animation: fadein 0.3s, fadeout 0.3s 1.7s;
+`;
+
+document.getElementById('toast-container').appendChild(toast);
+
+setTimeout(() => {
+  toast.remove();
+}, 2000);
+
       });
     });
 
@@ -1606,6 +1623,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 </script>
+
+<div id="toast-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;"></div>
 
   
 </body>
