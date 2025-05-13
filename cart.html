@@ -71,6 +71,43 @@
     .checkout-button:hover {
       background-color: #333;
     }
+    #order-form {
+      display: none;
+      margin-top: 40px;
+    }
+    #order-form input {
+      display: block;
+      margin-bottom: 15px;
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      font-size: 1rem;
+    }
+    .submit-order-btn {
+      padding: 12px 24px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .submit-order-btn:hover {
+      background-color: #45a049;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      z-index: 10000;
+      text-align: center;
+      font-size: 1.2em;
+    }
   </style>
 </head>
 <body>
@@ -81,9 +118,21 @@
     <p>Загрузка корзины...</p>
   </main>
 
+  <div id="order-form">
+    <h2>Оформление заказа</h2>
+    <input type="text" id="order-name" placeholder="Имя">
+    <input type="email" id="order-email" placeholder="E-mail">
+    <input type="text" id="order-city" placeholder="Город">
+    <button class="submit-order-btn" id="submit-order">Отправить</button>
+  </div>
+
+  <div class="modal" id="success-modal">Заказ успешно оформлен!</div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const container = document.getElementById('cart');
+      const orderForm = document.getElementById('order-form');
+      const successModal = document.getElementById('success-modal');
 
       function renderCart() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -117,6 +166,9 @@
         const button = document.createElement('button');
         button.className = 'checkout-button';
         button.textContent = 'Перейти к оформлению';
+        button.addEventListener('click', () => {
+          orderForm.style.display = 'block';
+        });
         container.appendChild(button);
 
         document.querySelectorAll('.cart-item-remove').forEach(btn => {
@@ -131,6 +183,19 @@
       }
 
       renderCart();
+
+      document.getElementById('submit-order').addEventListener('click', () => {
+        const name = document.getElementById('order-name').value;
+        const email = document.getElementById('order-email').value;
+        const city = document.getElementById('order-city').value;
+
+        localStorage.setItem('orderInfo', JSON.stringify({ name, email, city }));
+
+        successModal.style.display = 'block';
+        setTimeout(() => {
+          successModal.style.display = 'none';
+        }, 2000);
+      });
     });
   </script>
 </body>
