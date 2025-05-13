@@ -31,11 +31,20 @@
       border-bottom: 1px solid #ccc;
       padding: 15px 0;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 20px;
     }
-    .cart-item:last-child {
-      border-bottom: none;
+    .cart-item img {
+      width: 80px;
+      height: auto;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .cart-item-title {
+      flex: 1;
+    }
+    .cart-item-price {
+      font-weight: bold;
     }
     .checkout-button {
       margin-top: 30px;
@@ -55,16 +64,38 @@
   <header>
     <h1>Ваша корзина</h1>
   </header>
-  <main>
-    <div class="cart-item">
-      <span>Товар 1</span>
-      <span>₴499</span>
-    </div>
-    <div class="cart-item">
-      <span>Товар 2</span>
-      <span>₴799</span>
-    </div>
-    <button class="checkout-button">Перейти к оформлению</button>
+  <main id="cart">
+    <p>Загрузка корзины...</p>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const container = document.getElementById('cart');
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p>Корзина пуста.</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+      cart.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.title}">
+          <div class="cart-item-title">${item.title}</div>
+          <div class="cart-item-price">₴${item.price}</div>
+        `;
+        container.appendChild(div);
+      });
+
+      const button = document.createElement('button');
+      button.className = 'checkout-button';
+      button.textContent = 'Перейти к оформлению';
+      container.appendChild(button);
+    });
+  </script>
 </body>
 </html>
+
