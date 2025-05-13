@@ -153,13 +153,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </li>
 
           <li>
-            <button class="nav-action-btn">
-              <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
+<button class="nav-action-btn" id="cart-button">
+  <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
 
-              <data class="nav-action-text" value="318.00">Basket: <strong>$318.00</strong></data>
+  <data class="nav-action-text" value="0">Basket: <strong id="cart-total-price">$0.00</strong></data>
 
-              <data class="nav-action-badge" value="4" aria-hidden="true">4</data>
-            </button>
+  <data class="nav-action-badge" id="cart-badge" value="0" aria-hidden="true">0</data>
+</button>
           </li>
 
         </ul>
@@ -1599,6 +1599,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         cart.push({ title, price, image });
         localStorage.setItem('cart', JSON.stringify(cart));
+        if (window.updateCartBadge) updateCartBadge();
         const toast = document.createElement('div');
 toast.textContent = 'Товар добавлен в корзину!';
 toast.style.cssText = `
@@ -1635,6 +1636,32 @@ setTimeout(() => {
 </script>
 
 <div id="toast-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;"></div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const badge = document.getElementById('cart-badge');
+    const totalPrice = document.getElementById('cart-total-price');
+    const button = document.getElementById('cart-button');
+
+    function updateCartInfo() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      badge.textContent = cart.length;
+      badge.setAttribute('value', cart.length);
+
+      const total = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+      totalPrice.textContent = `$${total.toFixed(2)}`;
+    }
+
+    updateCartInfo();
+
+    button.addEventListener('click', () => {
+      window.location.href = 'cart.html';
+    });
+
+    // Поддержка обновления после добавления
+    window.updateCartBadge = updateCartInfo;
+  });
+</script>
 
   
 </body>
