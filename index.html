@@ -348,6 +348,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </h3>
 
                   <data class="card-price" value="180.85">$180.85</data>
+                  <button class="card-action-btn" aria-labelledby="card-label-1">В корзину</button>
+
 
                 </div>
 
@@ -410,6 +412,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </h3>
 
                   <data class="card-price" value="190.85">$190.85</data>
+                  <button class="card-action-btn" aria-labelledby="card-label-2">В корзину</button>
+
 
                 </div>
 
@@ -474,6 +478,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </h3>
 
                   <data class="card-price" value="160.85">$160.85</data>
+                  <button class="card-action-btn" aria-labelledby="card-label-3">В корзину</button>
+
 
                 </div>
 
@@ -538,6 +544,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </h3>
 
                   <data class="card-price" value="170.85">$170.85 <del>$200.21</del></data>
+                  <button class="card-action-btn" aria-labelledby="card-label-4">В корзину</button>
+
 
                 </div>
 
@@ -602,6 +610,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </h3>
 
                   <data class="card-price" value="120.85">$120.85</data>
+                  <button class="card-action-btn" aria-labelledby="card-label-5">В корзину</button>
+
 
                 </div>
 
@@ -664,6 +674,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </h3>
 
                   <data class="card-price" value="100.85">$100.85</data>
+                  <button class="card-action-btn" aria-labelledby="card-label-6">В корзину</button>
+
 
                 </div>
 
@@ -726,6 +738,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </h3>
 
                   <data class="card-price" value="120.85">$120.85</data>
+                  <button class="card-action-btn" aria-labelledby="card-label-7">В корзину</button>
+
 
                 </div>
 
@@ -788,6 +802,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </h3>
 
                   <data class="card-price" value="100.85">$100.85</data>
+                  <button class="card-action-btn" aria-labelledby="card-label-8">В корзину</button>
+
 
                 </div>
 
@@ -934,6 +950,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </h3>
 
                     <data class="card-price" value="180.85">$180.85</data>
+                    <button class="card-action-btn" aria-labelledby="card-label-9">В корзину</button>
+
 
                   </div>
 
@@ -996,6 +1014,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </h3>
 
                     <data class="card-price" value="190.85">$190.85</data>
+                    <button class="card-action-btn" aria-labelledby="card-label-10">В корзину</button>
+
 
                   </div>
 
@@ -1060,6 +1080,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </h3>
 
                     <data class="card-price" value="160.85">$160.85</data>
+                    <button class="card-action-btn" aria-labelledby="card-label-11">В корзину</button>
+
 
                   </div>
 
@@ -1124,6 +1146,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </h3>
 
                     <data class="card-price" value="170.85">$170.85 <del>$200.21</del></data>
+                    <button class="card-action-btn" aria-labelledby="card-label-12">В корзину</button>
+
 
                   </div>
 
@@ -1553,6 +1577,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('.card-action-btn[aria-labelledby^="card-label"]');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.product-card');
+        const title = card.querySelector('.card-title a').textContent.trim();
+        const price = card.querySelector('.card-price').getAttribute('value');
+        const image = card.querySelector('img').getAttribute('src');
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({ title, price, image });
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert(`Добавлено в корзину: ${title}`);
+      });
+    });
+
+    // Переход по нажатию на “View Cart”
+    const viewCartLinks = document.querySelectorAll('a, span');
+    viewCartLinks.forEach(el => {
+      if (el.textContent.trim().toLowerCase() === 'view cart') {
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', () => {
+          window.location.href = 'cart.html';
+        });
+      }
+    });
+  });
+</script>
+
+  
 </body>
 
 </html>
