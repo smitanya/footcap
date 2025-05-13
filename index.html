@@ -1663,6 +1663,11 @@ setTimeout(() => {
   });
 </script>
 
+  <script>
+  window.addEventListener('pageshow', function () {
+    if (window.updateCartBadge) window.updateCartBadge();
+  });
+</script>
   
 </body>
 
