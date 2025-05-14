@@ -188,6 +188,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <input type="email" id="order-email" placeholder="E-mail">
     <input type="text" id="order-city" placeholder="Город">
     <button class="submit-order-btn" id="submit-order">Отправить</button>
+
+    <script>
+  document.getElementById('submit-order').addEventListener('click', function () {
+    const name = document.getElementById('order-name').value;
+    const email = document.getElementById('order-email').value;
+    const city = document.getElementById('order-city').value;
+
+    // Сохраняем в localStorage (опционально)
+    localStorage.setItem('orderInfo', JSON.stringify({ name, email, city }));
+
+    // Отправляем данные в dataLayer
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'form_submit',
+      order_name: name,
+      order_email: email,
+      order_city: city
+    });
+
+    // Показываем модалку
+    const modal = document.getElementById('success-modal');
+    modal.style.display = 'block';
+    setTimeout(() => {
+      modal.style.display = 'none';
+    }, 2000);
+  });
+</script>
+
+    
   </div>
 
   <div class="modal" id="success-modal">Заказ успешно оформлен!</div>
