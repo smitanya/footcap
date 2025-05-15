@@ -292,5 +292,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       });
     });
   </script>
+
+  
+<script>
+  const landingTime = sessionStorage.getItem('landingTime');
+  if (landingTime) {
+    const timeToCart = Math.round((Date.now() - landingTime) / 1000); // в секундах
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'time_to_cart',
+      seconds_to_cart: timeToCart
+    });
+
+    sessionStorage.removeItem('landingTime');
+  }
+</script>
+
+  
 </body>
 </html>
