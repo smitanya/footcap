@@ -203,8 +203,8 @@ window.dataLayer = window.dataLayer || [];
 
 let totalAmount = 0;
 try {
-  const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
-  totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  totalAmount = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
 } catch (e) {
   console.warn('Ошибка чтения корзины:', e);
 }
