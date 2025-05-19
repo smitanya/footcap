@@ -189,7 +189,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <input type="text" id="order-city" placeholder="Город">
     <button class="submit-order-btn" id="submit-order">Отправить</button>
 
-    <script>
+<script>
   document.getElementById('submit-order').addEventListener('click', function () {
     const name = document.getElementById('order-name').value;
     const email = document.getElementById('order-email').value;
@@ -198,25 +198,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     // Сохраняем в localStorage (опционально)
     localStorage.setItem('orderInfo', JSON.stringify({ name, email, city }));
 
-  // Отправляем данные в dataLayer
-window.dataLayer = window.dataLayer || [];
+    // Подготовка данных для отправки
+    window.dataLayer = window.dataLayer || [];
 
-let totalAmount = 0;
-try {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  totalAmount = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
-} catch (e) {
-  console.warn('Ошибка чтения корзины:', e);
-}
+    let totalAmount = 0;
+    let itemNames = [];
+    let itemCount = 0;
 
-window.dataLayer.push({
-  event: 'form_submit',
-  order_name: name,
-  order_email: email,
-  order_city: city,
-  order_total: totalAmount  // 💰 итоговая сумма!
-});
+    try {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      totalAmount = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+      itemNames = cart.map(item => item.title);
+      itemCount = cart.length;
+    } catch (e) {
+      console.warn('Ошибка чтения корзины:', e);
+    }
 
+    window.dataLayer.push({
+      event: 'form_submit',
+      order_name: name,
+      order_email: email,
+      order_city: city,
+      order_total: totalAmount,
+      order_count: itemCount,
+      order_items: itemNames
+    });
 
     // Показываем модалку
     const modal = document.getElementById('success-modal');
